@@ -166,13 +166,14 @@ docker-compose up -d
 <pre><code class="language-bash">go test -v ./...
 </code></pre>
 <p>The default database URLs are directed to these databases in <code>misc/database_test/docker-compose.yml</code>. Test databases could be overrode by setting following environment variables:</p>
-<table><thead><tr><th>Environment Value</th><th>Default Value</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Environment Value</th><th>Default Value</th></tr></thead><tbody>
 <tr><td><code>MYSQL_URI</code></td><td><code>mysql://root:password@tcp(127.0.0.1:3306)/</code></td></tr>
 <tr><td><code>POSTGRES_URI</code></td><td><code>postgres://gorse:gorse_pass@127.0.0.1/</code></td></tr>
 <tr><td><code>MONGO_URI</code></td><td><code>mongodb://root:password@127.0.0.1:27017/</code></td></tr>
 <tr><td><code>CLICKHOUSE_URI</code></td><td><code>clickhouse://127.0.0.1:8123/</code></td></tr>
 <tr><td><code>REDIS_URI</code></td><td><code>redis://127.0.0.1:6379/</code></td></tr>
 </tbody></table>
+</div>
 <p>For example, use TiDB as a test database by:</p>
 <pre><code class="language-bash">MYSQL_URI=mysql://root:password@tcp(127.0.0.1:4000)/ go test -v ./...
 </code></pre>

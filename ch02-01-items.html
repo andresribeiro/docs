@@ -184,7 +184,7 @@
 <p>Multi-categories recommendations are common, take YouTube for example, where multiple recommendation categories are provided on the homepage.</p>
 <p><img src="img/ch2/youtube-topics.png" alt="" /></p>
 <p>Multiple categories can be distinguished by topics such as food, travel, etc., or by forms, e.g. live, short and long videos. Items will definitely appear in the global recommendation stream, and in addition the <code>Categories</code> field determines which recommendation categories the items should appear in. For each recommendation API, there are a global version and category version:</p>
-<table><thead><tr><th>METHOD</th><th>URL</th><th>DESCRIPTION</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>METHOD</th><th>URL</th><th>DESCRIPTION</th></tr></thead><tbody>
 <tr><td>GET</td><td>/api/latest</td><td>Get latest items.</td></tr>
 <tr><td>GET</td><td>/api/latest/{category}</td><td>Get latest items in specified category.</td></tr>
 <tr><td>GET</td><td>/api/popular</td><td>Get popular items.</td></tr>
@@ -194,6 +194,7 @@
 <tr><td>GET</td><td>/api/item/{item-id}/neighbors</td><td>Get neighbors of a item.</td></tr>
 <tr><td>GET</td><td>/api/item/{item-id}/neighbors/{category}</td><td>Get neighbors of a item in specified category.</td></tr>
 </tbody></table>
+</div>
 <p>For example, for a live badminton match, you can set its <code>Categories</code> to &quot;Live&quot; and &quot;Sports&quot;. In this way, in addition to the default recommendation stream, the user can find the live stream in the &quot;Live&quot; and &quot;Sports&quot; recommendation categories.</p>
 <p><img src="img/ch2/youtube-live.png" alt="" /></p>
 <p>Note that multi-column recommendations will consume more Redis cache space.</p>

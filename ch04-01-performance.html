@@ -162,7 +162,7 @@ bash bench_test.sh --cache redis --data mysql
 <li>The <code>data</code> argument should be one of <code>clickhouse</code>, <code>mysql</code>, <code>postgres</code> or <code>mongodb</code>.</li>
 </ul>
 <p>The benchmark result (in milliseconds) is as follows:</p>
-<table><thead><tr><th><code>data_store</code></th><th>MySQL</th><th>PSQL</th><th>CH</th><th>Mongo</th><th>MySQL</th><th>PSQL</th><th>Mongo</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th><code>data_store</code></th><th>MySQL</th><th>PSQL</th><th>CH</th><th>Mongo</th><th>MySQL</th><th>PSQL</th><th>Mongo</th></tr></thead><tbody>
 <tr><td><code>cache_store</code></td><td>Redis</td><td>Redis</td><td>Redis</td><td>Redis</td><td>MySQL</td><td>PSQL</td><td>Mongo</td></tr>
 <tr><td>InsertUser</td><td>1.39</td><td>2.60</td><td>1.33</td><td>0.45</td><td>17.97</td><td>4.03</td><td>0.41</td></tr>
 <tr><td>PatchUser</td><td>1.43</td><td>0.67</td><td>10.56</td><td>0.44</td><td>19.55</td><td>4.49</td><td>0.41</td></tr>
@@ -212,7 +212,7 @@ bash bench_test.sh --cache redis --data mysql
 <tr><td>RecommendFromItemBased/100</td><td>4.35</td><td>3.86</td><td>9.75</td><td>3.87</td><td>21.53</td><td>10.08</td><td>10.81</td></tr>
 <tr><td>RecommendFromItemBased/1000</td><td>23.65</td><td>21.59</td><td>36.04</td><td>22.25</td><td>183.78</td><td>57.02</td><td>59.73</td></tr>
 </tbody></table>
-
+</div>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

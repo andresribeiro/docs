@@ -173,6 +173,12 @@
 <li><a href="https://docs.docker.com/compose/install/">Docker Compose</a>, nodes will be orchestrated by Docker Compose.</li>
 </ul>
 <h2 id="setup-gorse"><a class="header" href="#setup-gorse">Setup Gorse</a></h2>
+<p>Gorse supports to be single node or multiple nodes. This section demonstrates how to setup a minimal usable Gorse single node via playground and a multiple nodes cluster via Docker Compose.</p>
+<h3 id="option-1-setup-gorse-all-in-one-node-via-playground"><a class="header" href="#option-1-setup-gorse-all-in-one-node-via-playground">Option 1: Setup Gorse All-in-one node via Playground</a></h3>
+<p>Use the following command to setup a Gorse all-in-one node.</p>
+<pre><code class="language-bash">docker run -p 8088:8088 zhenghaoz/gorse-in-one --playground
+</code></pre>
+<h3 id="option-2-setup-gorse-cluster-via-docker-compose"><a class="header" href="#option-2-setup-gorse-cluster-via-docker-compose">Option 2: Setup Gorse Cluster via Docker Compose</a></h3>
 <p>There is an example <a href="https://github.com/zhenghaoz/gorse/blob/master/docker/docker-compose.yml">docker-compose.yml</a> consists of a master node, a server node and a worker node, a Redis instance, and a MySQL instance.</p>
 <ul>
 <li>Download <a href="https://github.com/zhenghaoz/gorse/blob/master/docker/docker-compose.yml">docker-compose.yml</a> and the config file <a href="https://github.com/zhenghaoz/gorse/blob/master/docker/config.toml">config.toml</a>. The config file is explained in <a href="ch01-03-config.html">Section 1.3 Configuration</a>.</li>
@@ -210,11 +216,12 @@ wget https://cdn.gorse.io/example/github.sql
 mysql -h 127.0.0.1 -u gorse -pgorse_pass gorse &lt; github.sql
 </code></pre>
 <p>There are three kinds of interactions (called &quot;feedbacks&quot; in Gorse) between users and repositories in this dataset.</p>
-<table><thead><tr><th>Feedback Type</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Feedback Type</th><th>Description</th></tr></thead><tbody>
 <tr><td>star</td><td>A user &quot;starred&quot; a repository in GitHub</td></tr>
 <tr><td>read</td><td>A user read a repository in <a href="https://gitrec.gorse.io/">GitRec</a></td></tr>
 <tr><td>like</td><td>A user &quot;liked&quot; a repository in <a href="https://gitrec.gorse.io/">GitRec</a></td></tr>
 </tbody></table>
+</div>
 <p>In the configuration file, &quot;read&quot; belongs to <code>read_feedback_types</code> while &quot;star&quot; and “like” belong to <code>positive_feedback_types</code>.</p>
 <pre><code class="language-toml"># The feedback types for positive events.
 positive_feedback_types = [&quot;star&quot;,&quot;like&quot;]
@@ -291,42 +298,46 @@ curl -X POST http://127.0.0.1:8087/api/feedback \
 </code></pre>
 <p>A complete example to build a recommender system is discussed in <a href="ch01-04-demo.html">Section 1.5 GitRec, The Live Demo</a>, which is useful to learn Gorse.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="deploy"><a class="header" href="#deploy">Deploy</a></h1>
-<p>The best practice to manage Gorse nodes is using orchestration tools such as Docker Compose, etc. There are Docker images of the master node, the server node, and the worker node.</p>
-<table><thead><tr><th>Docker Image</th><th>Version</th><th>Size</th><th>Pulls</th></tr></thead><tbody>
+<p>Gorse support multiple nodes mode (master node, worker node and server node) or single node mode (all-in-one node). There are Docker images of the master node, the server node, the worker node, and the all-in-one node.</p>
+<div class="table-wrapper"><table><thead><tr><th>Docker Image</th><th>Version</th><th>Size</th><th>Pulls</th></tr></thead><tbody>
 <tr><td><a href="https://hub.docker.com/repository/docker/zhenghaoz/gorse-master">zhenghaoz/gorse-master</a></td><td><img src="https://img.shields.io/docker/v/zhenghaoz/gorse-master?sort=semver" alt="Docker Image Version (latest semver)" /></td><td><img src="https://img.shields.io/docker/image-size/zhenghaoz/gorse-master?sort=semver" alt="gorse-master" /></td><td><img src="https://img.shields.io/docker/pulls/zhenghaoz/gorse-master" alt="Docker Pulls" /></td></tr>
 <tr><td><a href="https://hub.docker.com/repository/docker/zhenghaoz/gorse-server">zhenghaoz/gorse-server</a></td><td><img src="https://img.shields.io/docker/v/zhenghaoz/gorse-server?sort=semver" alt="Docker Image Version (latest semver)" /></td><td><img src="https://img.shields.io/docker/image-size/zhenghaoz/gorse-server?sort=semver" alt="gorse-server" /></td><td><img src="https://img.shields.io/docker/pulls/zhenghaoz/gorse-server" alt="Docker Pulls" /></td></tr>
 <tr><td><a href="https://hub.docker.com/repository/docker/zhenghaoz/gorse-worker">zhenghaoz/gorse-worker</a></td><td><img src="https://img.shields.io/docker/v/zhenghaoz/gorse-worker?sort=semver" alt="Docker Image Version (latest semver)" /></td><td><img src="https://img.shields.io/docker/image-size/zhenghaoz/gorse-worker?sort=semver" alt="gorse-worker" /></td><td><img src="https://img.shields.io/docker/pulls/zhenghaoz/gorse-worker" alt="Docker Pulls" /></td></tr>
+<tr><td><a href="https://hub.docker.com/repository/docker/zhenghaoz/gorse-in-one">zhenghaoz/gorse-in-one</a></td><td><img src="https://img.shields.io/docker/v/zhenghaoz/gorse-in-one?sort=semver" alt="Docker Image Version (latest semver)" /></td><td><img src="https://img.shields.io/docker/image-size/zhenghaoz/gorse-in-one?sort=semver" alt="gorse-master" /></td><td><img src="https://img.shields.io/docker/pulls/zhenghaoz/gorse-in-one" alt="Docker Pulls" /></td></tr>
 </tbody></table>
+</div>
 <h2 id="prerequisite"><a class="header" href="#prerequisite">Prerequisite</a></h2>
 <p>Gorse depends on following software:</p>
 <ul>
-<li><em>Redis</em> is used to store caches.</li>
-<li>One of <em>MySQL/PostgresSQL/ClickHouse/MongoDB</em> is used to store data.</li>
+<li>One of <em>MySQL/PostgreSQL/MongoDB/Redis</em> is used to store caches.</li>
+<li>One of <em>MySQL/PostgreSQL/ClickHouse/MongoDB</em> is used to store data.</li>
 </ul>
 <p>The minimal versions of dependent software are as follows:</p>
-<table><thead><tr><th>Software</th><th>Minimal Version</th><th>Compatible Product</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Software</th><th>Minimal Version</th><th>Compatible Product</th></tr></thead><tbody>
 <tr><td>Redis</td><td>5.0</td><td></td></tr>
 <tr><td>MySQL</td><td>5.7</td><td>MariaDB &gt;= 10.2</td></tr>
 <tr><td>PostgresSQL</td><td>10.0</td><td></td></tr>
 <tr><td>ClickHouse</td><td>21.10</td><td></td></tr>
 <tr><td>MongoDB</td><td>4.0</td><td></td></tr>
 </tbody></table>
+</div>
 <h2 id="command-line-flags"><a class="header" href="#command-line-flags">Command Line Flags</a></h2>
 <p>Command line flags are useful when deploy the Gorse cluster.</p>
 <ul>
 <li>Flags of the master node.</li>
 </ul>
-<table><thead><tr><th>Flag</th><th>Default</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Flag</th><th>Default</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>-v,--version</code></td><td></td><td>print Gorse version</td></tr>
 <tr><td><code>-c,--config</code></td><td></td><td>configuration file path</td></tr>
 <tr><td><code>--debug</code></td><td></td><td>use debug log mode</td></tr>
 <tr><td><code>--log-path</code></td><td></td><td>path of log file</td></tr>
 <tr><td><code>--cache-path</code></td><td><code>worker_cache.data</code></td><td>path of cache file</td></tr>
 </tbody></table>
+</div>
 <ul>
 <li>Flags of the server node.</li>
 </ul>
-<table><thead><tr><th>Flag</th><th>Default</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Flag</th><th>Default</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>-v,--version</code></td><td></td><td>print Gorse version</td></tr>
 <tr><td><code>--master-host</code></td><td><code>127.0.0.1</code></td><td>host of master node</td></tr>
 <tr><td><code>--master-port</code></td><td><code>8086</code></td><td>port of master port</td></tr>
@@ -336,10 +347,11 @@ curl -X POST http://127.0.0.1:8087/api/feedback \
 <tr><td><code>--log-path</code></td><td></td><td>path of log file</td></tr>
 <tr><td><code>--cache-path</code></td><td><code>worker_cache.data</code></td><td>path of cache file</td></tr>
 </tbody></table>
+</div>
 <ul>
 <li>Flags of the worker node.</li>
 </ul>
-<table><thead><tr><th>Flag</th><th>Default</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Flag</th><th>Default</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>-v,--version</code></td><td></td><td>print Gorse version</td></tr>
 <tr><td><code>--master-host</code></td><td><code>127.0.0.1</code></td><td>host of master node</td></tr>
 <tr><td><code>--master-port</code></td><td><code>8086</code></td><td>port of master port</td></tr>
@@ -350,8 +362,51 @@ curl -X POST http://127.0.0.1:8087/api/feedback \
 <tr><td><code>--log-path</code></td><td></td><td>path of log file</td></tr>
 <tr><td><code>--cache-path</code></td><td><code>worker_cache.data</code></td><td>path of cache file</td></tr>
 </tbody></table>
+</div>
+<ul>
+<li>Flags of the all-in-one node.</li>
+</ul>
+<div class="table-wrapper"><table><thead><tr><th>Flag</th><th>Default</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>-v,--version</code></td><td></td><td>print Gorse version</td></tr>
+<tr><td><code>-c,--config</code></td><td></td><td>configuration file path</td></tr>
+<tr><td><code>--debug</code></td><td></td><td>use debug log mode</td></tr>
+<tr><td><code>--log-path</code></td><td></td><td>path of log file</td></tr>
+<tr><td><code>--cache-path</code></td><td><code>one_cache.data</code></td><td>path of cache file</td></tr>
+<tr><td><code>--playground</code></td><td></td><td>enable playground mode</td></tr>
+<tr><td><code>--recommend-jobs</code></td><td><code>1</code></td><td>number of jobs for the recommendation tasks</td></tr>
+</tbody></table>
+</div>
+<h2 id="deploy-gorse-all-in-one-node"><a class="header" href="#deploy-gorse-all-in-one-node">Deploy Gorse All-in-one Node</a></h2>
+<p>Before deploying, make sure storage backends for data storage and cache storage is ready.</p>
+<ul>
+<li>Linux (amd64)</li>
+</ul>
+<pre><code class="language-bash"># Download binary
+wget https://github.com/gorse-io/gorse/releases/latest/download/gorse_linux_amd64.zip
+unzip gorse_linux_amd64.zip
+
+# Start all-in-one node
+./gorse-in-one_linux_amd64 --config config.toml \
+  --log-path one.log \
+  --cache-path one_cache.data \
+  --recommend-jobs 1
+</code></pre>
+<blockquote>
+<p>For other operating systems and architectures, please visit <a href="https://github.com/gorse-io/gorse/releases">GitHub Release</a> for download links.</p>
+</blockquote>
+<ul>
+<li>Docker:</li>
+</ul>
+<pre><code class="language-bash">docker run -d --network=host \
+  -v ./config.toml:/etc/gorse/config.toml \
+  zhenghaoz/gorse-in-one \
+  -c /etc/gorse/config.toml \
+  --log-path /var/log/gorse/one.log \
+  --cache-path /var/lib/gorse/one_cache.data \
+</code></pre>
+<p>The all-in-one node loads the config file from <code>config.toml</code>, writes the log file to <code>one.log</code> and writes the cache file to <code>one_cache.data</code>. The addresses of Redis and MySQL are specified in configuration file <a href="ch01-03-config.html#database">(1.3)</a> or by environment variables <a href="ch01-03-config.html#environment-variables">(1.3)</a>.</p>
 <h2 id="deploy-gorse-in-docker-compose"><a class="header" href="#deploy-gorse-in-docker-compose">Deploy Gorse in Docker Compose</a></h2>
-<p>docker-compose.yaml for a minimal Gorse cluster is as follows:</p>
+<p>A <code>docker-compose.yaml</code> for a minimal Gorse cluster is as follows:</p>
 <pre><code class="language-yaml">version: &quot;3&quot;
 services:
   redis:
@@ -415,6 +470,9 @@ services:
     ports:
       - 8086:8086
       - 8088:8088
+    environment:
+      GORSE_CACHE_STORE: redis://redis:6379
+      GORSE_DATA_STORE: mysql://gorse:gorse_pass@tcp(mysql:3306)/gorse
     command: &gt;
       -c /etc/gorse/config.toml 
       --log-path /var/log/gorse/master.log 
@@ -434,21 +492,11 @@ volumes:
   master_data:
   gorse_log:
 </code></pre>
+<p>MySQL and Redis can be replaced by other storage backend supported by Gorse.</p>
 <ul>
-<li>The master node loads the config file from <code>/etc/gorse/config.toml</code> (mounted to <code>./config.toml</code>), writes the log file to <code>/var/log/gorse/master.log</code> (mounted in &quot;gorse_log&quot; volume) and writes the cache file to <code>/var/lib/gorse/master_cache.data</code> (mounted in &quot;master_data&quot; volume). The addresses of Redis and MySQL are specified in configuration file <a href="ch01-03-config.html#database">(1.3)</a> or by environment variables <a href="ch01-03-config.html#environment-variables">(1.3)</a>.</li>
-</ul>
-<pre><code class="language-toml"># The database for caching, support Redis only:
-#   redis://&lt;user&gt;:&lt;password&gt;@&lt;host&gt;:&lt;port&gt;/&lt;db_number&gt;
-cache_store = &quot;redis://redis:6379&quot;
-
-# The database for persist data, support MySQL, Postgres, ClickHouse and MongoDB:
-#   mysql://[username[:password]@][protocol[(address)]]/dbname[?param1=value1&amp;...&amp;paramN=valueN]
-#   postgres://bob:secret@1.2.3.4:5432/mydb?sslmode=verify-full
-#   clickhouse://user:password@host[:port]/database?param1=value1&amp;...&amp;paramN=valueN
-#   mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]
-data_store = &quot;mysql://gorse:gorse_pass@tcp(mysql:3306)/gorse?parseTime=true&quot;
-</code></pre>
-<ul>
+<li>
+<p>The master node loads the config file from <code>/etc/gorse/config.toml</code> (mounted to <code>./config.toml</code>), writes the log file to <code>/var/log/gorse/master.log</code> (mounted in &quot;gorse_log&quot; volume) and writes the cache file to <code>/var/lib/gorse/master_cache.data</code> (mounted in &quot;master_data&quot; volume). The addresses of Redis and MySQL are specified in configuration file <a href="ch01-03-config.html#database">(1.3)</a> or by environment variables <a href="ch01-03-config.html#environment-variables">(1.3)</a>.</p>
+</li>
 <li>
 <p>The server node synchronizes with the master node at port <code>8086</code>, writes the log file to <code>/var/log/gorse/server.log</code> (mounted in &quot;gorse_log&quot; volume) and writes the cache file to <code>/var/lib/gorse/server_cache.data</code> (mounted in &quot;server_data&quot; volume). The entrypoint for RESTful APIs and Prometheus metrics export is <code>worker:8087</code>.</p>
 </li>
@@ -500,7 +548,7 @@ cache_expire = &quot;10s&quot;
 </code></pre>
 <p>The <code>cache_expire</code> is the time that a item recovers from hidden state. It has no affect on updating popular items or hiding items.</p>
 <h2 id="item-apis"><a class="header" href="#item-apis">Item APIs</a></h2>
-<table><thead><tr><th>Method</th><th>URL</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Method</th><th>URL</th><th>Description</th></tr></thead><tbody>
 <tr><td>POST</td><td>/item</td><td>Insert an item.<br>Overwrite if the item exists.</td></tr>
 <tr><td>GET</td><td>/item/{item-id}</td><td>Get an item.</td></tr>
 <tr><td>PATCH</td><td>/item/{item-id}</td><td>Modify an item.</td></tr>
@@ -510,16 +558,18 @@ cache_expire = &quot;10s&quot;
 <tr><td>PUT</td><td>/item/{item-id}/category/{category}</td><td>Append a category to an item.</td></tr>
 <tr><td>DELETE</td><td>/item/{item-id}/category/{category}</td><td>Delete a category from an item.</td></tr>
 </tbody></table>
+</div>
 <h2 id="user-apis"><a class="header" href="#user-apis">User APIs</a></h2>
-<table><thead><tr><th>Method</th><th>URL</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Method</th><th>URL</th><th>Description</th></tr></thead><tbody>
 <tr><td>POST</td><td>/user</td><td>Insert a user. Overwrite if the user exists.</td></tr>
 <tr><td>GET</td><td>/user/{user-id}</td><td>Get a user.</td></tr>
 <tr><td>PATCH</td><td>/user/{user-id}</td><td>Modify a user.</td></tr>
 <tr><td>DELETE</td><td>/user/{user-id}</td><td>Delete a user and his or her feedbacks.</td></tr>
 <tr><td>GET</td><td>/users</td><td>Get users.</td></tr>
 </tbody></table>
+</div>
 <h2 id="feedback-apis"><a class="header" href="#feedback-apis">Feedback APIs</a></h2>
-<table><thead><tr><th>Method</th><th>URL</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Method</th><th>URL</th><th>Description</th></tr></thead><tbody>
 <tr><td>POST</td><td>/feedback</td><td>Insert feedbacks.<br>Ignore if exists.</td></tr>
 <tr><td>PUT</td><td>/feedback</td><td>Insert feedbacks.<br>Overwrite if exists.</td></tr>
 <tr><td>GET</td><td>/feedback</td><td>Get feedbacks.</td></tr>
@@ -533,8 +583,9 @@ cache_expire = &quot;10s&quot;
 <tr><td>GET</td><td>/item/{item-id}/feedback</td><td>Get feedback by item id.</td></tr>
 <tr><td>GET</td><td>/item/{item-id}/feedback/{feedback-type}</td><td>Get feedbacks by item id<br>with feedback type.</td></tr>
 </tbody></table>
+</div>
 <h2 id="recommendation-apis"><a class="header" href="#recommendation-apis">Recommendation APIs</a></h2>
-<table><thead><tr><th>Method</th><th>URL</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Method</th><th>URL</th><th>Description</th></tr></thead><tbody>
 <tr><td>GET</td><td>/popular</td><td>Get popular items.</td></tr>
 <tr><td>GET</td><td>/popular/{category}</td><td>Get popular items in category.</td></tr>
 <tr><td>GET</td><td>/latest</td><td>Get latest items.</td></tr>
@@ -546,13 +597,14 @@ cache_expire = &quot;10s&quot;
 <tr><td>GET</td><td>/recommend/{user-id}/{category}</td><td>Get recommendations for a user<br>in category.</td></tr>
 <tr><td>POST</td><td>/session/recommend</td><td>Get recommendations based on session (a list of feedbacks).</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="configuration"><a class="header" href="#configuration">Configuration</a></h1>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="configuration"><a class="header" href="#configuration">Configuration</a></h1>
 <p>These configuration items without default values must be filled. It's highly recommended to create a new config file based on <a href="https://github.com/zhenghaoz/gorse/blob/master/config/config.toml.template"><code>config.toml.template</code></a>.</p>
 <h2 id="database"><a class="header" href="#database"><code>[database]</code></a></h2>
-<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody>
-<tr><td><code>data_store</code></td><td>string</td><td></td><td>Database for data store (supports MySQL/PostgresSQL/ClickHouse/MongoDB) <a href="chapter_2.html">(2)</a></td></tr>
-<tr><td><code>cache_store</code></td><td>string</td><td></td><td>Database for cache store (supports Redis) <a href="chapter_2.html">(2)</a></td></tr>
+<div class="table-wrapper"><table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>data_store</code></td><td>string</td><td></td><td>Database for data store (supports MySQL/PostgreSQL/ClickHouse/MongoDB) <a href="chapter_2.html">(2)</a></td></tr>
+<tr><td><code>cache_store</code></td><td>string</td><td></td><td>Database for cache store (supports MySQL/PostgreSQL/MongoDB/Redis) <a href="chapter_2.html">(2)</a></td></tr>
 </tbody></table>
+</div>
 <p>The DSN (Database Source Name) format of the <code>data_store</code> and <code>cache_store</code> is as follows.</p>
 <ul>
 <li>Redis: <code>redis://&lt;user&gt;:&lt;password&gt;@&lt;host&gt;:&lt;port&gt;/&lt;db_number&gt;</code></li>
@@ -567,7 +619,7 @@ cache_expire = &quot;10s&quot;
 </li>
 </ul>
 <h2 id="master"><a class="header" href="#master"><code>[master]</code></a></h2>
-<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>host</code></td><td>string</td><td><code>&quot;0.0.0.0&quot;</code></td><td>Master node listening host for gRPC service (metadata exchange) <a href="chapter_2.html">(2)</a></td></tr>
 <tr><td><code>port</code></td><td>integer</td><td><code>8086</code></td><td>Master node listening port for gRPC service (metadata exchange) <a href="chapter_2.html">(2)</a></td></tr>
 <tr><td><code>http_host</code></td><td>string</td><td><code>&quot;0.0.0.0&quot;</code></td><td>Master node listening host for HTTP service (dashboard <a href="ch02-05-dashboard.html">(2.5)</a>)</td></tr>
@@ -577,8 +629,9 @@ cache_expire = &quot;10s&quot;
 <tr><td><code>dashboard_user_name</code></td><td>string</td><td></td><td>Username login dashboard <a href="ch02-05-dashboard.html#login">(2.5)</a></td></tr>
 <tr><td><code>dashboard_password</code></td><td>string</td><td></td><td>Password login dashboard <a href="ch02-05-dashboard.html#login">(2.5)</a></td></tr>
 </tbody></table>
+</div>
 <h2 id="server"><a class="header" href="#server"><code>[server]</code></a></h2>
-<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>default_n</code></td><td>integer</td><td><code>10</code></td><td>Default number of returned items <a href="ch01-02-restful-api.html#authorization">(1.2)</a></td></tr>
 <tr><td><code>api_key</code></td><td>string</td><td></td><td>Secret key for RESTful APIs (SSL required) <a href="ch01-02-restful-api.html#default-length-of-returned-list">(1.2)</a></td></tr>
 <tr><td><code>clock_error</code></td><td>integer</td><td><code>5s</code></td><td>clock error in the cluster <a href="ch01-02-restful-api.html#clock-error">(1.2)</a></td></tr>
@@ -586,38 +639,44 @@ cache_expire = &quot;10s&quot;
 <tr><td><code>auto_insert_item</code></td><td>boolean</td><td><code>true</code></td><td>Automatically insert new items when inserting new feedback <a href="ch02-02-feedback.html#users-items-and-feedback">(2.2)</a></td></tr>
 <tr><td><code>cache_expire</code></td><td>string</td><td><code>10s</code></td><td>Server-side cache expire time <a href="ch01-02-restful-api.html#server-side-cache">(1.2)</a></td></tr>
 </tbody></table>
+</div>
 <h2 id="recommend"><a class="header" href="#recommend"><code>[recommend]</code></a></h2>
-<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>cache_size</code></td><td>string</td><td><code>100</code></td><td>Number of cached elements in cache store</td></tr>
 <tr><td><code>cache_expire</code></td><td>string</td><td><code>72h</code></td><td>Recommended cache expire time</td></tr>
 </tbody></table>
+</div>
 <h3 id="recommenddata_source"><a class="header" href="#recommenddata_source"><code>[recommend.data_source]</code></a></h3>
-<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>positive_feedback_types</code></td><td>string</td><td></td><td>Types of positive feedback <a href="ch02-02-feedback.html#define-positive-feedback-and-read-feedback">(2.2)</a></td></tr>
 <tr><td><code>read_feedback_types</code></td><td>string</td><td></td><td>Type of feedback for read events <a href="ch02-02-feedback.html#define-positive-feedback-and-read-feedback">(2.2)</a></td></tr>
 <tr><td><code>positive_feedback_ttl</code></td><td>string</td><td><code>0</code></td><td>Time-to-live of positive feedback <a href="ch02-04-performance.html#set-ttl-for-items-and-feedback">(2.4)</a></td></tr>
 <tr><td><code>item_ttl</code></td><td>string</td><td><code>0</code></td><td>Time-to-live of items <a href="ch02-04-performance.html#set-ttl-for-items-and-feedback">(2.4)</a></td></tr>
 </tbody></table>
+</div>
 <h3 id="recommendpopular"><a class="header" href="#recommendpopular"><code>[recommend.popular]</code></a></h3>
-<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>popular_window</code></td><td>integer</td><td><code>4320h</code></td><td>Time window of popular items in days <a href="ch02-03-strategy.html#latest-recommender">(2.3)</a></td></tr>
 </tbody></table>
+</div>
 <h3 id="recommenduser_neighbors"><a class="header" href="#recommenduser_neighbors"><code>[recommend.user_neighbors]</code></a></h3>
-<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>neighbor_type</code></td><td>string</td><td><code>&quot;auto&quot;</code></td><td>The type of neighbors for users <a href="ch02-03-strategy.html#user-based-similarity-recommender">(2.3)</a></td></tr>
 <tr><td><code>enable_index</code></td><td>boolean</td><td><code>false</code></td><td>Enable approximate item neighbor searching using vector index <a href="ch02-04-performance.html#enable-clustering-index-for-similar-itemuser-searching">(2.4)</a></td></tr>
 <tr><td><code>index_recall</code></td><td>float</td><td><code>0.8</code></td><td>Minimal recall for approximate item neighbor searching <a href="ch02-04-performance.html#enable-clustering-index-for-similar-itemuser-searching">(2.4)</a></td></tr>
 <tr><td><code>index_fit_epoch</code></td><td>integer</td><td><code>3</code></td><td>Maximal number of fit epochs for approximate item neighbor searching vector index <a href="ch02-04-performance.html#enable-clustering-index-for-similar-itemuser-searching">(2.4)</a></td></tr>
 </tbody></table>
+</div>
 <h3 id="recommenditem_neighbors"><a class="header" href="#recommenditem_neighbors"><code>[recommend.item_neighbors]</code></a></h3>
-<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>neighbor_type</code></td><td>string</td><td><code>&quot;auto&quot;</code></td><td>The type of neighbors for items <a href="ch02-03-strategy.html#item-based-similarity-recommender">(2.3)</a></td></tr>
 <tr><td><code>enable_index</code></td><td>boolean</td><td><code>false</code></td><td>Enable approximate item neighbor searching using vector index <a href="ch02-04-performance.html#enable-clustering-index-for-similar-itemuser-searching">(2.4)</a></td></tr>
 <tr><td><code>index_recall</code></td><td>float</td><td><code>0.8</code></td><td>Minimal recall for approximate user neighbor searching <a href="ch02-04-performance.html#enable-clustering-index-for-similar-itemuser-searching">(2.4)</a></td></tr>
 <tr><td><code>index_fit_epoch</code></td><td>integer</td><td><code>3</code></td><td>Maximal number of fit epochs for approximate user neighbor searching vector index <a href="ch02-04-performance.html#enable-clustering-index-for-similar-itemuser-searching">(2.4)</a></td></tr>
 </tbody></table>
+</div>
 <h3 id="recommendcollaborative"><a class="header" href="#recommendcollaborative"><code>[recommend.collaborative]</code></a></h3>
-<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>model_fit_period</code></td><td>integer</td><td><code>60m</code></td><td>Period of model training <a href="ch02-04-performance.html#set-training-and-recommendation-period">(2.4)</a></td></tr>
 <tr><td><code>model_search_period</code></td><td>integer</td><td><code>360m</code></td><td>Period of model search <a href="ch02-04-performance.html#set-training-and-recommendation-period">(2.4)</a></td></tr>
 <tr><td><code>model_search_epoch</code></td><td>integer</td><td><code>100</code></td><td>Number of training epochs for each model in model search <a href="ch02-04-performance.html#set-training-and-recommendation-period">(2.4)</a></td></tr>
@@ -626,14 +685,16 @@ cache_expire = &quot;10s&quot;
 <tr><td><code>index_recall</code></td><td>float</td><td><code>0.9</code></td><td>Minimal recall for approximate collaborative filtering recommend <a href="ch02-04-performance.html#enable-hnsw-index-for-collaborative-filtering">(2.4)</a></td></tr>
 <tr><td><code>index_fit_epoch</code></td><td>integer</td><td><code>3</code></td><td>Maximal number of fit epochs for approximate collaborative filtering recommend vector index <a href="ch02-04-performance.html#enable-hnsw-index-for-collaborative-filtering">(2.4)</a></td></tr>
 </tbody></table>
+</div>
 <h3 id="recommendreplacement"><a class="header" href="#recommendreplacement"><code>[recommend.replacement]</code></a></h3>
-<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>enable_replacement</code></td><td>boolean</td><td><code>false</code></td><td>Replace historical items back to recommendations <a href="ch02-03-strategy.html#offline-strategy">(2.4)</a></td></tr>
 <tr><td><code>positive_replacement_decay</code></td><td>float</td><td><code>0.8</code></td><td>Decay the weights of replaced items from positive feedbacks <a href="ch02-03-strategy.html#offline-strategy">(2.4)</a></td></tr>
 <tr><td><code>read_replacement_decay</code></td><td>float</td><td><code>0.6</code></td><td>Decay the weights of replaced items from read feedbacks <a href="ch02-03-strategy.html#offline-strategy">(2.4)</a></td></tr>
 </tbody></table>
+</div>
 <h3 id="recommendoffline"><a class="header" href="#recommendoffline"><code>[recommend.offline]</code></a></h3>
-<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>check_recommend_period</code></td><td>integer</td><td><code>1m</code></td><td>Period to check recommendation for users <a href="ch02-04-performance.html#set-training-and-recommendation-period">(2.4)</a></td></tr>
 <tr><td><code>refresh_recommend_period</code></td><td>integer</td><td><code>24h</code></td><td>Period to refresh offline recommendation cache <a href="ch02-04-performance.html#set-training-and-recommendation-period">(2.4)</a></td></tr>
 <tr><td><code>enable_latest_recommend</code></td><td>boolean</td><td><code>false</code></td><td>Enable latest recommendation during offline recommendation <a href="ch02-03-strategy.html#offline-strategy">(2.3)</a></td></tr>
@@ -644,14 +705,16 @@ cache_expire = &quot;10s&quot;
 <tr><td><code>enable_click_through_prediction</code></td><td>boolean</td><td><code>false</code></td><td>Enable click-though rate prediction during offline recommendation. Otherwise, results from multi-way recommendation would be merged randomly <a href="ch02-03-strategy.html#offline-strategy">(2.3)</a></td></tr>
 <tr><td><code>explore_recommend</code></td><td>map</td><td><code>{ popular = 0.0, latest = 0.0 }</code></td><td>The explore recommendation method is used to inject popular items or latest items into recommended result <a href="ch02-03-strategy.html#offline-strategy">(2.3)</a></td></tr>
 </tbody></table>
+</div>
 <h3 id="recommendonline"><a class="header" href="#recommendonline"><code>[recommend.online]</code></a></h3>
-<table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Key</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody>
 <tr><td><code>fallback_recommend</code></td><td>strings</td><td><code>[&quot;latest&quot;]</code></td><td>Source of recommendation when personalized recommendation exhausted <a href="ch02-03-strategy.html#online-strategy">(2.3)</a></td></tr>
 <tr><td><code>num_feedback_fallback_item_based</code></td><td>integer</td><td><code>10</code></td><td>The number of feedback used in fallback item-based similar recommendation <a href="ch02-03-strategy.html#online-strategy">(2.3)</a></td></tr>
 </tbody></table>
+</div>
 <h2 id="environment-variables"><a class="header" href="#environment-variables">Environment Variables</a></h2>
 <p>Part of configurations can be overwritten by environment variables.</p>
-<table><thead><tr><th>Configuration</th><th>Environment Variable</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Configuration</th><th>Environment Variable</th></tr></thead><tbody>
 <tr><td><code>database.cache_store</code></td><td><code>GORSE_CACHE_STORE</code></td></tr>
 <tr><td><code>database.data_store</code></td><td><code>GORSE_DATA_STORE</code></td></tr>
 <tr><td><code>master.port</code></td><td><code>GORSE_MASTER_PORT</code></td></tr>
@@ -663,7 +726,7 @@ cache_expire = &quot;10s&quot;
 <tr><td><code>master.dashboard_password</code></td><td><code>GORSE_DASHBOARD_PASSWORD</code></td></tr>
 <tr><td><code>server.api_key</code></td><td><code>GORSE_SERVER_API_KEY</code></td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="gitrec-the-live-demo"><a class="header" href="#gitrec-the-live-demo">GitRec, The Live Demo</a></h1>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="gitrec-the-live-demo"><a class="header" href="#gitrec-the-live-demo">GitRec, The Live Demo</a></h1>
 <p><a href="https://gitrec.gorse.io/">GitRec</a>, the live demo, is developed to demonstrate the usage of the Gorse recommender system engine. A user logins in via GitHub OAuth, then repositories starred by this user before being imported to Gorse. Gorse recommends repositories to this user based on starred repositories. When this user saw a recommended repository, he or she can press ❤️ to tell GitRec that he or she like this recommendation and press ⏯️ to skip the current recommendation.</p>
 <p><img src="img/gitrec.jpg" alt="gitrec" /></p>
 <h2 id="design"><a class="header" href="#design">Design</a></h2>
@@ -849,7 +912,7 @@ meta_timeout = &quot;10s&quot;
 <p>Multi-categories recommendations are common, take YouTube for example, where multiple recommendation categories are provided on the homepage.</p>
 <p><img src="img/ch2/youtube-topics.png" alt="" /></p>
 <p>Multiple categories can be distinguished by topics such as food, travel, etc., or by forms, e.g. live, short and long videos. Items will definitely appear in the global recommendation stream, and in addition the <code>Categories</code> field determines which recommendation categories the items should appear in. For each recommendation API, there are a global version and category version:</p>
-<table><thead><tr><th>METHOD</th><th>URL</th><th>DESCRIPTION</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>METHOD</th><th>URL</th><th>DESCRIPTION</th></tr></thead><tbody>
 <tr><td>GET</td><td>/api/latest</td><td>Get latest items.</td></tr>
 <tr><td>GET</td><td>/api/latest/{category}</td><td>Get latest items in specified category.</td></tr>
 <tr><td>GET</td><td>/api/popular</td><td>Get popular items.</td></tr>
@@ -859,6 +922,7 @@ meta_timeout = &quot;10s&quot;
 <tr><td>GET</td><td>/api/item/{item-id}/neighbors</td><td>Get neighbors of a item.</td></tr>
 <tr><td>GET</td><td>/api/item/{item-id}/neighbors/{category}</td><td>Get neighbors of a item in specified category.</td></tr>
 </tbody></table>
+</div>
 <p>For example, for a live badminton match, you can set its <code>Categories</code> to &quot;Live&quot; and &quot;Sports&quot;. In this way, in addition to the default recommendation stream, the user can find the live stream in the &quot;Live&quot; and &quot;Sports&quot; recommendation categories.</p>
 <p><img src="img/ch2/youtube-live.png" alt="" /></p>
 <p>Note that multi-column recommendations will consume more Redis cache space.</p>
@@ -912,12 +976,13 @@ meta_timeout = &quot;10s&quot;
 }
 </code></pre>
 <p>Gorse's server node provides RESTful APIs for inserting users, items, and feedback, as well as getting a recommendation for users. Please refer to the RESTful API documentation for a detailed description.</p>
-<table><thead><tr><th>METHOD</th><th>URL</th><th>DESCRIPTION</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>METHOD</th><th>URL</th><th>DESCRIPTION</th></tr></thead><tbody>
 <tr><td>POST</td><td>/api/item</td><td>Insert item.</td></tr>
 <tr><td>POST</td><td>/api/user</td><td>Insert user.</td></tr>
 <tr><td>POST</td><td>/api/feedback</td><td>Insert feedback if the feedback not exist.</td></tr>
 <tr><td>PUT</td><td>/api/feedback</td><td>Insert feedback, and overwrites existed feedback.</td></tr>
 </tbody></table>
+</div>
 <p>The user and item must exist when a feedback is inserted. Gorse server nodes will create new users and new items automatically according to the following configurations:</p>
 <pre><code class="language-toml">[server]
 
@@ -1617,13 +1682,14 @@ docker-compose up -d
 <pre><code class="language-bash">go test -v ./...
 </code></pre>
 <p>The default database URLs are directed to these databases in <code>misc/database_test/docker-compose.yml</code>. Test databases could be overrode by setting following environment variables:</p>
-<table><thead><tr><th>Environment Value</th><th>Default Value</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Environment Value</th><th>Default Value</th></tr></thead><tbody>
 <tr><td><code>MYSQL_URI</code></td><td><code>mysql://root:password@tcp(127.0.0.1:3306)/</code></td></tr>
 <tr><td><code>POSTGRES_URI</code></td><td><code>postgres://gorse:gorse_pass@127.0.0.1/</code></td></tr>
 <tr><td><code>MONGO_URI</code></td><td><code>mongodb://root:password@127.0.0.1:27017/</code></td></tr>
 <tr><td><code>CLICKHOUSE_URI</code></td><td><code>clickhouse://127.0.0.1:8123/</code></td></tr>
 <tr><td><code>REDIS_URI</code></td><td><code>redis://127.0.0.1:6379/</code></td></tr>
 </tbody></table>
+</div>
 <p>For example, use TiDB as a test database by:</p>
 <pre><code class="language-bash">MYSQL_URI=mysql://root:password@tcp(127.0.0.1:4000)/ go test -v ./...
 </code></pre>
@@ -1639,7 +1705,7 @@ bash bench_test.sh --cache redis --data mysql
 <li>The <code>data</code> argument should be one of <code>clickhouse</code>, <code>mysql</code>, <code>postgres</code> or <code>mongodb</code>.</li>
 </ul>
 <p>The benchmark result (in milliseconds) is as follows:</p>
-<table><thead><tr><th><code>data_store</code></th><th>MySQL</th><th>PSQL</th><th>CH</th><th>Mongo</th><th>MySQL</th><th>PSQL</th><th>Mongo</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th><code>data_store</code></th><th>MySQL</th><th>PSQL</th><th>CH</th><th>Mongo</th><th>MySQL</th><th>PSQL</th><th>Mongo</th></tr></thead><tbody>
 <tr><td><code>cache_store</code></td><td>Redis</td><td>Redis</td><td>Redis</td><td>Redis</td><td>MySQL</td><td>PSQL</td><td>Mongo</td></tr>
 <tr><td>InsertUser</td><td>1.39</td><td>2.60</td><td>1.33</td><td>0.45</td><td>17.97</td><td>4.03</td><td>0.41</td></tr>
 <tr><td>PatchUser</td><td>1.43</td><td>0.67</td><td>10.56</td><td>0.44</td><td>19.55</td><td>4.49</td><td>0.41</td></tr>
@@ -1689,7 +1755,7 @@ bash bench_test.sh --cache redis --data mysql
 <tr><td>RecommendFromItemBased/100</td><td>4.35</td><td>3.86</td><td>9.75</td><td>3.87</td><td>21.53</td><td>10.08</td><td>10.81</td></tr>
 <tr><td>RecommendFromItemBased/1000</td><td>23.65</td><td>21.59</td><td>36.04</td><td>22.25</td><td>183.78</td><td>57.02</td><td>59.73</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="frequently-asked-questions"><a class="header" href="#frequently-asked-questions">Frequently Asked Questions</a></h1>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="frequently-asked-questions"><a class="header" href="#frequently-asked-questions">Frequently Asked Questions</a></h1>
 <p>These frequent asked questions are collected from issues, emails and chats. Feel free to ask more questions via <a href="https://github.com/zhenghaoz/gorse/issues">issue</a>, <a href="support@gorse.io">email</a>, <a href="https://discord.com/channels/830635934210588743/">Discord</a> (for English) or <a href="https://qm.qq.com/cgi-bin/qm/qr?k=lOERnxfAM2U2rj4C9Htv9T68SLIXg6uk&amp;jump_from=webapi">QQ</a> (for Chinese).</p>
 <h3 id="1-how-to-address-the-cold-start-problem"><a class="header" href="#1-how-to-address-the-cold-start-problem">1. How to address the cold-start problem?</a></h3>
 <p>Use <code>explore_recommend</code> to inject the latest items or recently popular items into a recommendation. Also, item labels are helpful to rank new items in a recommendation. For example:</p>

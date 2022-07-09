@@ -185,7 +185,7 @@ cache_expire = &quot;10s&quot;
 </code></pre>
 <p>The <code>cache_expire</code> is the time that a item recovers from hidden state. It has no affect on updating popular items or hiding items.</p>
 <h2 id="item-apis"><a class="header" href="#item-apis">Item APIs</a></h2>
-<table><thead><tr><th>Method</th><th>URL</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Method</th><th>URL</th><th>Description</th></tr></thead><tbody>
 <tr><td>POST</td><td>/item</td><td>Insert an item.<br>Overwrite if the item exists.</td></tr>
 <tr><td>GET</td><td>/item/{item-id}</td><td>Get an item.</td></tr>
 <tr><td>PATCH</td><td>/item/{item-id}</td><td>Modify an item.</td></tr>
@@ -195,16 +195,18 @@ cache_expire = &quot;10s&quot;
 <tr><td>PUT</td><td>/item/{item-id}/category/{category}</td><td>Append a category to an item.</td></tr>
 <tr><td>DELETE</td><td>/item/{item-id}/category/{category}</td><td>Delete a category from an item.</td></tr>
 </tbody></table>
+</div>
 <h2 id="user-apis"><a class="header" href="#user-apis">User APIs</a></h2>
-<table><thead><tr><th>Method</th><th>URL</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Method</th><th>URL</th><th>Description</th></tr></thead><tbody>
 <tr><td>POST</td><td>/user</td><td>Insert a user. Overwrite if the user exists.</td></tr>
 <tr><td>GET</td><td>/user/{user-id}</td><td>Get a user.</td></tr>
 <tr><td>PATCH</td><td>/user/{user-id}</td><td>Modify a user.</td></tr>
 <tr><td>DELETE</td><td>/user/{user-id}</td><td>Delete a user and his or her feedbacks.</td></tr>
 <tr><td>GET</td><td>/users</td><td>Get users.</td></tr>
 </tbody></table>
+</div>
 <h2 id="feedback-apis"><a class="header" href="#feedback-apis">Feedback APIs</a></h2>
-<table><thead><tr><th>Method</th><th>URL</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Method</th><th>URL</th><th>Description</th></tr></thead><tbody>
 <tr><td>POST</td><td>/feedback</td><td>Insert feedbacks.<br>Ignore if exists.</td></tr>
 <tr><td>PUT</td><td>/feedback</td><td>Insert feedbacks.<br>Overwrite if exists.</td></tr>
 <tr><td>GET</td><td>/feedback</td><td>Get feedbacks.</td></tr>
@@ -218,8 +220,9 @@ cache_expire = &quot;10s&quot;
 <tr><td>GET</td><td>/item/{item-id}/feedback</td><td>Get feedback by item id.</td></tr>
 <tr><td>GET</td><td>/item/{item-id}/feedback/{feedback-type}</td><td>Get feedbacks by item id<br>with feedback type.</td></tr>
 </tbody></table>
+</div>
 <h2 id="recommendation-apis"><a class="header" href="#recommendation-apis">Recommendation APIs</a></h2>
-<table><thead><tr><th>Method</th><th>URL</th><th>Description</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Method</th><th>URL</th><th>Description</th></tr></thead><tbody>
 <tr><td>GET</td><td>/popular</td><td>Get popular items.</td></tr>
 <tr><td>GET</td><td>/popular/{category}</td><td>Get popular items in category.</td></tr>
 <tr><td>GET</td><td>/latest</td><td>Get latest items.</td></tr>
@@ -231,7 +234,7 @@ cache_expire = &quot;10s&quot;
 <tr><td>GET</td><td>/recommend/{user-id}/{category}</td><td>Get recommendations for a user<br>in category.</td></tr>
 <tr><td>POST</td><td>/session/recommend</td><td>Get recommendations based on session (a list of feedbacks).</td></tr>
 </tbody></table>
-
+</div>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

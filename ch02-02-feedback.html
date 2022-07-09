@@ -186,12 +186,13 @@
 }
 </code></pre>
 <p>Gorse's server node provides RESTful APIs for inserting users, items, and feedback, as well as getting a recommendation for users. Please refer to the RESTful API documentation for a detailed description.</p>
-<table><thead><tr><th>METHOD</th><th>URL</th><th>DESCRIPTION</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>METHOD</th><th>URL</th><th>DESCRIPTION</th></tr></thead><tbody>
 <tr><td>POST</td><td>/api/item</td><td>Insert item.</td></tr>
 <tr><td>POST</td><td>/api/user</td><td>Insert user.</td></tr>
 <tr><td>POST</td><td>/api/feedback</td><td>Insert feedback if the feedback not exist.</td></tr>
 <tr><td>PUT</td><td>/api/feedback</td><td>Insert feedback, and overwrites existed feedback.</td></tr>
 </tbody></table>
+</div>
 <p>The user and item must exist when a feedback is inserted. Gorse server nodes will create new users and new items automatically according to the following configurations:</p>
 <pre><code class="language-toml">[server]
 
